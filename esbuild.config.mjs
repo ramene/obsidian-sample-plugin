@@ -41,6 +41,13 @@ const context = await esbuild.context({
 	minify: prod,
 });
 
+// Add this line to include your CSS file
+esbuild.build({
+	entryPoints: ['main.css'],
+	bundle: true,
+	outfile: 'styles.css',
+});
+
 if (prod) {
 	await context.rebuild();
 	process.exit(0);

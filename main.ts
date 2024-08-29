@@ -1,4 +1,7 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, WorkspaceLeaf } from 'obsidian';
+import { WebViewLeaf } from './src/WebViewLeaf';
+import { SidebarWebViewLeaf } from './src/SidebarWebViewLeaf';
+import './styles.css';
 
 // Remember to rename these classes and interfaces!
 
@@ -15,6 +18,20 @@ export default class MyPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
+
+		this.registerView(
+			"custom-webview",
+			(leaf) => new WebViewLeaf(leaf)
+		);
+		this.registerView(
+			"sidebar-webview",
+			(leaf) => new SidebarWebViewLeaf(leaf)
+		);
+
+		// Add button to ribbon
+		this.addRibbonIcon('globe', 'Open WebView', () => {
+			this.activateView();
+		});
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
@@ -88,6 +105,17 @@ export default class MyPlugin extends Plugin {
 
 	async saveSettings() {
 		await this.saveData(this.settings);
+	}
+
+	async activateView() {
+		const { workspace } = this.app;
+		
+		let leaf = workspace.getLeavesOfType("custom-webview")[0];
+		if (!leaf) {
+			leaf = workspace.getLeaf(false);
+			await leaf.setViewState({ type: "custom-webview", active: true });
+		}
+		workspace.revealLeaf(leaf);
 	}
 }
 
