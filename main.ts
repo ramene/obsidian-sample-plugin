@@ -19,10 +19,30 @@ export default class MyPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		this.registerView(
-			"custom-webview",
-			(leaf) => new WebViewLeaf(leaf)
-		);
+		 // Load wasm_exec.js
+		//  const script = document.createElement('script');
+		//  script.src = this.app.vault.adapter.getResourcePath('src/wasm/wasm_exec.js');
+		//  document.head.appendChild(script);
+	 
+		 // Wait for the script to load
+		// await new Promise((resolve) => script.onload = resolve);
+
+		const script = document.createElement('script');
+		script.src = this.app.vault.adapter.getResourcePath('src/wasm/wasm_exec.js');
+		document.head.appendChild(script);
+		await new Promise((resolve) => script.onload = resolve);
+
+		// this.registerView(
+		// 	"custom-webview",
+		// 	(leaf) => new WebViewLeaf(leaf)
+		// );
+
+		this.registerView('custom-webview', (leaf) => {
+			console.log('Creating new WebViewLeaf');
+			return new WebViewLeaf(leaf);
+		  });
+
+
 		this.registerView(
 			"sidebar-webview",
 			(leaf) => new SidebarWebViewLeaf(leaf)
@@ -113,7 +133,7 @@ export default class MyPlugin extends Plugin {
 		let leaf = workspace.getLeavesOfType("custom-webview")[0];
 		if (!leaf) {
 			leaf = workspace.getLeaf(false);
-			await leaf.setViewState({ type: "custom-webview", active: true });
+			await leaf.setViewState({ type: "custom-webview" });
 		}
 		workspace.revealLeaf(leaf);
 	}

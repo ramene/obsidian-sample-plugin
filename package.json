@@ -5,7 +5,8 @@
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"build:wasm": "node build-wasm.js",
+		"build": "npm run build:wasm && tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",		
 		"build:rollup": "rollup --config rollup.config.js --environment BUILD:production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"obsidian": "rollup --config rollup.config.js -w",
