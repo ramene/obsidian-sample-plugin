@@ -7,5 +7,12 @@
 	"author": "Obsidian",
 	"authorUrl": "https://obsidian.md",
 	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+	"isDesktopOnly": false,
+	"files": [
+    "main.js",
+    "styles.css",
+    "manifest.json",
+    "main.wasm",
+	"wasmBase64.ts"
+	]
 }
