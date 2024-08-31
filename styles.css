@@ -8,13 +8,11 @@
   align-items: center;
   height: 40px;
   padding: 0 10px;
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ddd;
 }
 .custom-toolbar button {
   padding: 5px 10px;
   background-color: #007bff;
-  color: #fff;
+  color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;

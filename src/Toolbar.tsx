@@ -21,7 +21,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({ app }) => {
 
   return (
     <div className="custom-toolbar">
-      <button onClick={openRightSidebarWebview}>Open Right Sidebar</button>
+      <button onClick={openRightSidebarWebview}>Request Invite</button>
     </div>
   );
 };
